@@ -5,6 +5,7 @@ import (
 	"log"
 	"time"
 
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -23,15 +24,15 @@ func createStudentIndexes(ctx context.Context) {
 
 	indexes := []mongo.IndexModel{
 		{
-			Keys: map[string]int{
-				"tenantId": 1,
-				"roomId":   1,
+			Keys: bson.D{
+				{Key: "tenantId", Value: 1},
+				{Key: "roomId", Value: 1},
 			},
 		},
 		{
-			Keys: map[string]int{
-				"tenantId": 1,
-				"phone":    1,
+			Keys: bson.D{
+				{Key: "tenantId", Value: 1},
+				{Key: "phone", Value: 1},
 			},
 			Options: options.Index().SetUnique(true),
 		},
@@ -48,9 +49,9 @@ func createPaymentIndexes(ctx context.Context) {
 
 	indexes := []mongo.IndexModel{
 		{
-			Keys: map[string]int{
-				"tenantId": 1,
-				"dueDate":  1,
+			Keys: bson.D{
+				{Key: "tenantId", Value: 1},
+				{Key: "dueDate", Value: 1},
 			},
 		},
 	}
@@ -66,9 +67,9 @@ func createUserIndexes(ctx context.Context) {
 
 	indexes := []mongo.IndexModel{
 		{
-			Keys: map[string]int{
-				"tenantId": 1,
-				"email":    1,
+			Keys: bson.D{
+				{Key: "tenantId", Value: 1},
+				{Key: "email", Value: 1},
 			},
 			Options: options.Index().SetUnique(true),
 		},

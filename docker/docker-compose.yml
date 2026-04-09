@@ -1,6 +1,8 @@
 services:
   app:
-    build: .
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
     container_name: hostel_saas_app
     ports:
       - "8080:8080"
@@ -15,3 +17,6 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    environment:
+      RABBITMQ_LOGS: "-"
+      RABBITMQ_LOG_LEVEL: warning
