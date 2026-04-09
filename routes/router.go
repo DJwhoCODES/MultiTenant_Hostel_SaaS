@@ -3,6 +3,7 @@ package routes
 import (
 	"github.com/djwhocodes/hostel_saas/internal/middleware"
 	"github.com/djwhocodes/hostel_saas/internal/modules/auth"
+	"github.com/djwhocodes/hostel_saas/internal/modules/student"
 	"github.com/gin-gonic/gin"
 )
 
@@ -28,4 +29,10 @@ func RegisterRoutes(r *gin.Engine) {
 			"role":     middleware.GetRole(c),
 		})
 	})
+
+	studentRepo := student.NewRepository()
+	studentService := student.NewService(studentRepo)
+	studentHandler := student.NewHandler(studentService)
+
+	student.RegisterRoutes(protected, studentHandler)
 }
