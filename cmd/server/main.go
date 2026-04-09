@@ -5,6 +5,7 @@ import (
 
 	"github.com/djwhocodes/hostel_saas/config"
 	"github.com/djwhocodes/hostel_saas/internal/database"
+	"github.com/djwhocodes/hostel_saas/routes"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,7 +18,7 @@ func main() {
 
 	r := gin.Default()
 
-	// routes.RegisterRoutes(r)
+	routes.RegisterRoutes(r)
 
 	log.Println("🚀 Server running on port", config.AppConfig.Port)
 	r.Run(":" + config.AppConfig.Port)

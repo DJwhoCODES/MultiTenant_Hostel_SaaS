@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"github.com/djwhocodes/hostel_saas/internal/middleware"
 	"github.com/djwhocodes/hostel_saas/internal/modules/auth"
 	"github.com/gin-gonic/gin"
 )
@@ -13,4 +14,18 @@ func RegisterRoutes(r *gin.Engine) {
 	authHandler := auth.NewHandler(authService)
 
 	auth.RegisterRoutes(api, authHandler)
+
+	protected := api.Group("/")
+	protected.Use(
+		middleware.AuthMiddleware(),
+		middleware.TenantMiddleware(),
+	)
+
+	protected.GET("/me", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"userId":   middleware.GetUserID(c),
+			"tenantId": middleware.GetTenantID(c),
+			"role":     middleware.GetRole(c),
+		})
+	})
 }
